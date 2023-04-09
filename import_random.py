@@ -138,3 +138,4 @@ def menu():
             break
         else:
             print("Invalid choice")
+menu()
