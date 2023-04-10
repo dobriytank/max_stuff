@@ -3,6 +3,7 @@ import time
 import string
 
 IS_LOGGED_IN = False
+account = []
 
 def menu():
     # Displays the options (register, login, view account, save file, and exit), prompts the user to choose an option, and
@@ -27,6 +28,7 @@ def menu():
             break
         else:
             print("Invalid choice")
+
 def password_generator(password_length, include_numbers, include_symbols, include_capital_letters):
     characters = string.ascii_letters.lower()
     if include_symbols:
@@ -84,7 +86,9 @@ def login():
     # Prompts the user for their username and password, and checks if they match the stored account details in the accounts.txt file.
     # If the details match, returns True, otherwise, returns False.
 
-    global IS_LOGGED_IN == False
+    global IS_LOGGED_IN
+    global account
+    IS_LOGGED_IN = False
     username = input("Enter your username: ").lower().rstrip()
     password = input("Enter your password: ").lower().rstrip()
 
@@ -97,7 +101,8 @@ def login():
                 count += 1
         if count > 0:
             print("Login successful")
-            global IS_LOGGED_IN == True
+            IS_LOGGED_IN = True
+            account = [username, password]
         else:
             print("Invalid username or password")
 
@@ -132,13 +137,14 @@ def register():
 def view_account():
     # Reads the account details from the accounts.txt file and displays them on the screen for the logged in user.
     # find the account details for the specified username
+    global IS_LOGGED_IN
+    global account
 
-    with open("accounts.txt", "r") as f:
-        for line in f:
-            stored_username, stored_password = line.rstrip().split(" ")
-            if username == stored_username:
-                print(f"Username: {stored_username}, Password: {stored_password}")
-                return
-            print("Account not found")
-
+    if IS_LOGGED_IN:
+        username = account[0]
+        password = account[1]
+        print("Username: {}, password: {}".format(username, password))
+    else:
+        print("Please login first!")
+    
 menu()
