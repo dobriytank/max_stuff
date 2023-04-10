@@ -2,8 +2,33 @@ import random
 import time
 import string
 
+IS_LOGGED_IN = False
+
+def menu():
+    # Displays the options (register, login, view account, save file, and exit), prompts the user to choose an option, and
+    # calls the appropriate function based on the user's choice.
+
+    while True:
+        print("Select an option:")
+        print("1. Login")
+        print("2. Register")
+        print("3. View Account")
+        print("4. Exit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            login()
+        elif choice == "2":
+            register()
+        elif choice == "3":
+            view_account()
+        elif choice == "4":
+            print("Exiting program...")
+            time.sleep(2)
+            break
+        else:
+            print("Invalid choice")
 def password_generator(password_length, include_numbers, include_symbols, include_capital_letters):
-    characters = string.ascii_letters
+    characters = string.ascii_letters.lower()
     if include_symbols:
         characters += string.punctuation
     if include_numbers:
@@ -59,6 +84,7 @@ def login():
     # Prompts the user for their username and password, and checks if they match the stored account details in the accounts.txt file.
     # If the details match, returns True, otherwise, returns False.
 
+    global IS_LOGGED_IN == False
     username = input("Enter your username: ").lower().rstrip()
     password = input("Enter your password: ").lower().rstrip()
 
@@ -71,6 +97,7 @@ def login():
                 count += 1
         if count > 0:
             print("Login successful")
+            global IS_LOGGED_IN == True
         else:
             print("Invalid username or password")
 
@@ -114,28 +141,4 @@ def view_account():
                 return
             print("Account not found")
 
-
-def menu():
-    # Displays the options (register, login, view account, save file, and exit), prompts the user to choose an option, and
-    # calls the appropriate function based on the user's choice.
-
-    while True:
-        print("Select an option:")
-        print("1. Login")
-        print("2. Register")
-        print("3. View Account")
-        print("4. Exit")
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            login()
-        elif choice == "2":
-            register()
-        elif choice == "3":
-            view_account()
-        elif choice == "4":
-            print("Exiting program...")
-            time.sleep(2)
-            break
-        else:
-            print("Invalid choice")
 menu()
